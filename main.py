@@ -5,6 +5,7 @@ Standard library only.
 """
 
 import os
+import sys
 
 TEXT = """Past midnight, a lamp is still on in a room where everyone else has gone home. The desk is tidy. The papers are stacked square. Nobody left a note.
 
@@ -17,6 +18,14 @@ Keep the lamp on. The morning will find the desk the way you left it: ready.
 
 
 def main():
+    n = len(TEXT)
+    if n < 1 or n > 1000 or not TEXT.strip():
+        print(
+            f"error: entry text invalid (length {n} code points, "
+            "must be 1-1000 and non-blank)",
+            file=sys.stderr,
+        )
+        raise SystemExit(1)
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
     with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8") as f:
